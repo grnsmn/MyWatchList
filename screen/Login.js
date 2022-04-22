@@ -6,7 +6,7 @@ import { StyleSheet, View } from 'react-native'
 import { Input, Button } from '@rneui/themed'
 import { Snackbar } from 'react-native-paper'
 
-export default function Login ({navigation}) {
+const Login = ({navigation}) => {
   const [mail, setMail] = useState('E-Mail')
   const [pwd, setPwd] = useState('Password')
   const [checkForm, setCheckForm] = useState(false)
@@ -89,3 +89,5 @@ const styles = StyleSheet.create({
     width: '70%'
   }
 })
+
+export default Login;

@@ -22,7 +22,7 @@ const CardMovie = (props) => {
         />
         <Button
           title='Scopri'
-
+          onPress={props.onClick}
           buttonStyle={{
             backgroundColor: 'black',
             borderWidth: 2,
@@ -30,9 +30,9 @@ const CardMovie = (props) => {
             borderRadius: 30
           }}
           containerStyle={{
-            width: 200,
+            width: 100,
             marginHorizontal: 50,
-            marginVertical: 10
+            marginVertical: 5
           }}
           titleStyle={{ fontWeight: 'bold' }}
         />
@@ -45,11 +45,9 @@ const CardMovie = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#555',
     alignItems: 'center',
     justifyContent: 'center',
-    height: '50%',
-    width: '50%',
   }
 })
 

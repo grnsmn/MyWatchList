@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import Home from './screen/Home'
 import Login from './screen/Login'
+import DetailsMovie from './screen/DetailsMovie'
 
 const Stack = createNativeStackNavigator()
 
@@ -31,6 +32,7 @@ export default function App () {
             }
           }}
         />
+        <Stack.Screen name='Dettagli' component={DetailsMovie} />
       </Stack.Navigator>
     </NavigationContainer>
   )
