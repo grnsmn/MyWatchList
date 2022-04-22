@@ -10,15 +10,24 @@ const Stack = createNativeStackNavigator()
 export default function App () {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='Login'>
-        <Stack.Screen name='Home' component={Home} />
+      <Stack.Navigator initialRouteName='Home'>
+        <Stack.Screen
+          name='Home'
+          component={Home}
+          options={{
+            title: 'MyWatchList',
+            headerTitleStyle: {
+              fontWeight: 'bold'
+            }
+          }}
+        />
         <Stack.Screen
           name='Login'
           component={Login}
           options={{
             title: 'MyWatchList',
             headerTitleStyle: {
-              fontWeight: 'bold',
+              fontWeight: 'bold'
             }
           }}
         />
