@@ -1,24 +1,29 @@
 import { StatusBar } from 'expo-status-bar'
-import { View, StyleSheet, ActivityIndicator,Image } from 'react-native'
+import { View, StyleSheet, ActivityIndicator, Image } from 'react-native'
 import { Text } from '@rneui/themed'
 
-const DetailsMovie = ({route}) => {
-  const {title, poster, overview} = route.params;
+const DetailsMovie = ({ route }) => {
+  const { title, poster, overview, date } = route.params
+  let releaseDate = new Date(date)
 
   return (
     <View style={styles.container}>
       <StatusBar style='auto' />
       <View style={styles.mediaContainer}>
         <Image
-          source={{ uri: 'https://image.tmdb.org/t/p/original/'+poster }}
+          source={{ uri: 'https://image.tmdb.org/t/p/original/' + poster }}
           style={styles.img}
-          resizeMode="center"
-        //  PlaceholderContent={<ActivityIndicator size="large"/>}
+          resizeMode='center'
         />
       </View>
       <View style={styles.infoContainer}>
-        <Text h3>{title}</Text>
-        <Text h5>{overview}</Text>
+        <Text h2 h2Style={{ textAlign: 'center' }}>
+          {title}{' '}
+        </Text>
+        <Text h3 h3Style={{ textAlign: 'right' }}>
+          ({releaseDate.getFullYear()})
+        </Text>
+        <Text h5 style={{textAlign:'justify', marginTop:10}} >{overview}</Text>
 
       </View>
     </View>
@@ -32,15 +37,17 @@ const styles = StyleSheet.create({
     //justifyContent: 'center'
   },
   mediaContainer: {
-    flex:1
+    flex: 1,
+    justifyContent:'center',
+    alignItems:'center'
   },
   img: {
     aspectRatio: 1,
     width: '100%',
-    height: '95%',
+    height: '95%'
   },
-  infoContainer:{
-    flex:1
-  }
+  infoContainer: {
+    flex: 1
+  },
 })
 export default DetailsMovie
