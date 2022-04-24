@@ -1,32 +1,32 @@
 import { useState } from 'react'
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NavigationContainer } from '@react-navigation/native'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { StatusBar } from 'expo-status-bar'
-import { StyleSheet, View } from 'react-native'
-import { Input, Button } from '@rneui/themed'
+import { StyleSheet, View, Linking } from 'react-native'
+import { Input, Button, Text } from '@rneui/themed'
 import { Snackbar } from 'react-native-paper'
 
-const Login = ({navigation}) => {
+const Login = ({ navigation }) => {
   const [mail, setMail] = useState('E-Mail')
   const [pwd, setPwd] = useState('Password')
   const [checkForm, setCheckForm] = useState(false)
-//   console.log(mail)
-//   console.log(pwd)
+  //   console.log(mail)
+  //   console.log(pwd)
 
   const handleLogin = () => {
-    let condition1 = (mail.includes("simoneprova@email.com"))
-    let condition2 = (pwd=="simoneprova1")
-    if(condition1&&condition2){
-        navigation.navigate('Home')
-        setCheckForm(false)
-    }
-    else{
-        setCheckForm(true)       
+    let condition1 = mail.includes('simone@email.com')
+    let condition2 = pwd == 'simone'
+    if (condition1 && condition2) {
+      navigation.navigate('Home')
+      setCheckForm(false)
+    } else {
+      setCheckForm(true)
     }
   }
 
   return (
     <View style={styles.container}>
+      <StatusBar style='auto' />
       <Snackbar
         visible={checkForm}
         onDismiss={() => setCheckForm(false)}
@@ -35,14 +35,19 @@ const Login = ({navigation}) => {
       >
         Email o Password Errati
       </Snackbar>
+      <Text h4 h4Style={{ textAlign: 'center', marginBottom: 60 }}>
+        Tieni traccia dei prossimi {'\n'} film da non perderti
+      </Text>
+      <Text h6>Accedi</Text>
       <View style={styles.formContainer}>
-      
         <Input
-          placeholder={'Inserisci la tua Username'}
+          style={styles.inputStyle}
+          placeholder={'simone@email.com'}
           onEndEditing={value => setMail(value.nativeEvent.text.toLowerCase())}
         />
         <Input
-          placeholder={'Inserisci la tua Password'}
+          style={styles.inputStyle}
+          placeholder={'simone'}
           onEndEditing={value => setPwd(value.nativeEvent.text)}
           secureTextEntry={true}
         />
@@ -53,8 +58,8 @@ const Login = ({navigation}) => {
           onPress={handleLogin}
           buttonStyle={{
             backgroundColor: 'black',
-            borderWidth: 2,
-            borderColor: 'white',
+            borderWidth: 3,
+            borderColor: 'gold',
             borderRadius: 30
           }}
           containerStyle={{
@@ -65,7 +70,15 @@ const Login = ({navigation}) => {
           titleStyle={{ fontWeight: 'bold' }}
         />
       </View>
-      <StatusBar style='auto' />
+      <Text h6 style={{ marginTop: 80 }}>
+        Non hai un account?{' '}
+        <Text
+          style={{ color: 'blue' }}
+          onPress={() => Linking.openURL('http://google.com')}
+        >
+          Registrati
+        </Text>
+      </Text>
     </View>
   )
 }
@@ -85,9 +98,16 @@ const styles = StyleSheet.create({
     width: '100%',
     marginVertical: 20
   },
+  inputStyle: {
+    borderWidth: 4,
+    borderColor:'gold',
+    borderRadius: 10,
+    padding: 15,
+    marginTop: 20
+  },
   formContainer: {
     width: '70%'
   }
 })
 
-export default Login;
+export default Login

@@ -15,6 +15,7 @@ const Home = ({ navigation }) => {
   const [data, setData] = useState([]) //store film ricevuti da API
   const [myData, setMyData] = useState([]) //store film in locale
   const [search, setSearch] = useState('')
+  const [loading, setLoading] = useState(false)
   const { getItem, setItem } = useAsyncStorage('@local')
 
   const makeMovieRequest = () => {
@@ -54,10 +55,13 @@ const Home = ({ navigation }) => {
     setSearch(search)
   }
 
-  useEffect(() => {}, [data])
+  useEffect(() => {
+    setLoading(false)
+  }, [data])
   useEffect(() => {}, [myData])
   useEffect(() => {
     makeMovieRequest()
+    setLoading(true)
     readListFromStorage()
   }, [])
 
@@ -66,7 +70,7 @@ const Home = ({ navigation }) => {
     navigation.navigate('Dettagli', {
       title: scelta.title,
       overview: scelta.overview,
-      poster: scelta.poster_path,
+      poster: scelta.backdrop_path,
       date: scelta.release_date
     })
   }
@@ -110,24 +114,33 @@ const Home = ({ navigation }) => {
         <Text style={styles.textSection} h4>
           New Release
         </Text>
-
-        <FlatList
-          data={data}
-          horizontal
-          renderItem={renderItem}
-          keyExtractor={item => item.id}
-        ></FlatList>
+        {data.length == 0 ? (
+          <ActivityIndicator size={'large'} color='red' animating={loading} />
+        ) : (
+          <FlatList
+            data={data}
+            horizontal
+            renderItem={renderItem}
+            keyExtractor={item => item.id}
+          ></FlatList>
+        )}
       </View>
       <View style={styles.WatchListContainer}>
         <Text style={styles.textSection} h4>
           Watch List
         </Text>
-        <FlatList
-          data={myData}
-          horizontal
-          renderItem={renderItem}
-          keyExtractor={item => item.id}
-        ></FlatList>
+        {myData.length == 0 ? (
+          <Text h3 h3Style={{ textAlign: 'center', color: 'red' }}>
+            Aggiungi qualche titolo alla tua lista
+          </Text>
+        ) : (
+          <FlatList
+            data={myData}
+            horizontal
+            renderItem={renderItem}
+            keyExtractor={item => item.id}
+          ></FlatList>
+        )}
       </View>
     </ScrollView>
   )
@@ -136,28 +149,28 @@ const Home = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff'
-    // alignItems: 'center',
-    //justifyContent: 'center'
+    backgroundColor: '#555'
   },
   newReleaseContainer: {
+    alignItems: 'center',
     backgroundColor: '#555',
     flex: 1,
-    margin: 0,
-    padding: 5,
-    marginBottom: 2
+    padding: 10,
   },
   WatchListContainer: {
+    alignItems: 'center',
     backgroundColor: '#555',
     flex: 1,
-    margin: 0,
-    padding: 5,
-    marginBottom: 1
+    padding: 10,
   },
   textSection: {
-    color: 'white',
+    width: '60%',
+    borderRadius: 30,
+    color: 'gold',
     textAlign: 'center',
-    padding: 10
+    marginVertical: 5,
+    paddingVertical: 5,
+    backgroundColor: '#666'
   },
   searchStyle: {
     height: '5%'

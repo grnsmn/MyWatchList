@@ -11,14 +11,20 @@ const Stack = createNativeStackNavigator()
 export default function App () {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='Home'>
+      <Stack.Navigator initialRouteName='Login'>
         <Stack.Screen
           name='Home'
           component={Home}
           options={{
             title: 'MyWatchList',
             headerTitleStyle: {
-              fontWeight: 'bold'
+              fontWeight: 'bold',
+              color: 'gold',
+              fontSize:30
+            },
+            headerTitleAlign: 'center',
+            headerStyle: {
+              backgroundColor: '#666'
             }
           }}
         />
@@ -28,21 +34,34 @@ export default function App () {
           options={{
             title: 'MyWatchList',
             headerTitleStyle: {
-              fontWeight: 'bold'
+              fontSize:30,
+              fontWeight: 'bold',
+              color: 'gold'
+            },
+            headerTitleAlign: 'center',
+            headerStyle: {
+              backgroundColor: '#666'
             }
           }}
         />
-        <Stack.Screen name='Dettagli' component={DetailsMovie} />
+        <Stack.Screen
+          name='Dettagli'
+          component={DetailsMovie}
+          options={{
+            title: 'MyWatchList',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              fontSize:25,
+              color: 'gold'
+            },
+            headerTitleAlign: 'center',
+            headerStyle: {
+              backgroundColor: '#666'
+            }
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   )
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center'
-  }
-})

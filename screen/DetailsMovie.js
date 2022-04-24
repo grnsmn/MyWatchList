@@ -16,14 +16,14 @@ const DetailsMovie = ({ route }) => {
           resizeMode='center'
         />
       </View>
-      <View style={styles.infoContainer}>
-        <Text h2 h2Style={{ textAlign: 'center' }}>
+        <Text h2 h2Style={{ textAlign: 'center', color:'gold' }}>
           {title}{' '}
         </Text>
-        <Text h3 h3Style={{ textAlign: 'right' }}>
+      <View style={styles.infoContainer}>
+        <Text h3 h3Style={{ textAlign: 'right', color:'white' }}>
           ({releaseDate.getFullYear()})
         </Text>
-        <Text h5 style={{textAlign:'justify', marginTop:10}} >{overview}</Text>
+        <Text h5 style={{textAlign:'justify', marginTop:10, fontSize:16, padding:20, color:'white'}} >{overview}</Text>
 
       </View>
     </View>
@@ -32,9 +32,7 @@ const DetailsMovie = ({ route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff'
-    // alignItems: 'center',
-    //justifyContent: 'center'
+    backgroundColor: '#212121',
   },
   mediaContainer: {
     flex: 1,
@@ -42,12 +40,14 @@ const styles = StyleSheet.create({
     alignItems:'center'
   },
   img: {
-    aspectRatio: 1,
+    //aspectRatio: 1,
     width: '100%',
-    height: '95%'
+    height: '100%',
+    backgroundColor:'black'
   },
   infoContainer: {
-    flex: 1
+    flex: 1,
+    color:'white'
   },
 })
 export default DetailsMovie
