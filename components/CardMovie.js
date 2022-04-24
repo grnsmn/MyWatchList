@@ -6,15 +6,15 @@ import { StyleSheet, View, Text } from 'react-native'
 import { Button, Card } from '@rneui/themed'
 
 const CardMovie = (props) => {
-    const [url, setUrl] = useState(props.url)
+    const [url, setUrl] = useState('https://image.tmdb.org/t/p/w154/'+ props.url)
 
   return (
     <View style={styles.container}>
       <Card>
-        <Card.Title>{props.title}</Card.Title>
+        <Card.Title>{props.title!=null?props.title:'Titolo'}</Card.Title>
         <Card.Divider />
         <Card.Image
-          style={{ padding: 0 }}
+          style={{height:180, borderRadius:30 }}
           source={{
             uri:
               url
