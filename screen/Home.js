@@ -9,54 +9,60 @@ import {
 } from 'react-native'
 import { Text, SearchBar } from '@rneui/themed'
 import CardMovie from '../components/CardMovie'
+import { useAsyncStorage } from '@react-native-async-storage/async-storage'
 
 const Home = ({ navigation }) => {
   const [data, setData] = useState([]) //store film ricevuti da API
   const [myData, setMyData] = useState([]) //store film in locale
   const [search, setSearch] = useState('')
+  const { getItem, setItem } = useAsyncStorage('@local')
 
-  const updateSearch = search => {
-    setSearch(search)
-  }
-  useEffect(() => {
-    //console.log(data)
-    // Corretta! Viene eseguito una volta dopo il rendering con array vuoto
-  }, [data])
-  useEffect(() => {
-  }, [myData])
-  useEffect(() => {
-    makeRemoteRequest()
-  }, [])
-  const storeInMyList = async (movie) => {
-    try {
-      const jsonMovie = JSON.stringify(movie)
-      await AsyncStorage.setItem('@storage_Key', jsonMovie)
-    } catch (e) {
-      // saving error
-    }
-  }
-  const makeRemoteRequest = () => {
+  const makeMovieRequest = () => {
+    //Richiesta dettagli film da API del sito TheMovieDB.org
     fetch(
       'https://api.themoviedb.org/3/list/1?api_key=2a4ee1c370ac17ebfc701ee44ca985e3&language=en-US'
     )
       .then(response => response.json())
       .then(response => {
-        response.items.sort((a,b)=>{
-          if (a.release_date > b.release_date){
-            return -1;
+        response.items.sort((a, b) => {
+          //Ordina l'array per film più recenti
+          if (a.release_date > b.release_date) {
+            return -1
+          } else if (a.release_date > b.release_date) {
+            return 1
           }
-          else if (a.release_date > b.release_date){
-            return 1;
-          }
-          return 0;
+          return 0
         })
         setData(response.items)
       })
       .catch(err => console.error(err))
   }
-  const handleCardInfo = scelta => { //METODO CHE PORTA ALLO SCREEN PER LE INFO DEL FILM SELEZIONATO
-    //console.log('callback' + scelta.poster_path)
-    // console.log(scelta.poster_path)
+
+  const readListFromStorage = async () => {
+    const item = await getItem()
+    let list = JSON.parse(item)
+    setMyData(list)
+  }
+
+  const writeListToStorage = async listMovies => {
+    //Salvataggio locale dei film salvati in watchList
+    let locaList = JSON.stringify(listMovies)
+    await setItem(locaList)
+  }
+
+  const updateSearch = search => {
+    setSearch(search)
+  }
+
+  useEffect(() => {}, [data])
+  useEffect(() => {}, [myData])
+  useEffect(() => {
+    makeMovieRequest()
+    readListFromStorage()
+  }, [])
+
+  const handleCardInfo = scelta => {
+    //METODO CHE PORTA ALLO SCREEN PER LE INFO DEL FILM SELEZIONATO
     navigation.navigate('Dettagli', {
       title: scelta.title,
       overview: scelta.overview,
@@ -64,11 +70,22 @@ const Home = ({ navigation }) => {
       date: scelta.release_date
     })
   }
-  const handleCardAdd = scelta => {  //METODO PER AGGIUNGERE FILM ALLA WHATCHLIST
-    //console.log('callback' + scelta.poster_path)
-    // console.log(scelta.poster_path)
-    console.log(scelta.id)
-   // setMyData([...myData, scelta])
+  const handleCardAdd = scelta => {
+    //METODO PER AGGIUNGERE FILM ALLA WHATCHLIST
+    const savedMovie = {
+      ...scelta,
+      saved: true
+    }
+    let myUpdateList = [...myData, savedMovie]
+    setMyData(myUpdateList)
+    writeListToStorage(myUpdateList)
+  }
+  const handleCardRemove = scelta => {
+    let movieToRemove = myData.find(movie => movie.id == scelta.id)
+    let myUpdateList = myData.filter(movie => movie != movieToRemove)
+    setMyData(myUpdateList)
+    writeListToStorage(myUpdateList)
+    // console.log(myData.filter((movie)=> movie != movieToRemove))
   }
   const renderItem = ({ item }) => (
     <CardMovie
@@ -76,7 +93,8 @@ const Home = ({ navigation }) => {
       url={item.poster_path}
       onClickInfo={() => handleCardInfo(item)}
       onClickAdd={() => handleCardAdd(item)}
-      
+      onClickRemove={() => handleCardRemove(item)}
+      saved={item.saved}
     ></CardMovie>
   )
   return (
@@ -92,18 +110,13 @@ const Home = ({ navigation }) => {
         <Text style={styles.textSection} h4>
           New Release
         </Text>
-        {data.isEmpty == true ? (
-          <View style={{ flex: 1, justifyContent: 'center' }}>
-            <ActivityIndicator size='large'></ActivityIndicator>
-          </View>
-        ) : (
-          <FlatList
-            data={data}
-            horizontal
-            renderItem={renderItem}
-            keyExtractor={item => item.id}
-          ></FlatList>
-        )}
+
+        <FlatList
+          data={data}
+          horizontal
+          renderItem={renderItem}
+          keyExtractor={item => item.id}
+        ></FlatList>
       </View>
       <View style={styles.WatchListContainer}>
         <Text style={styles.textSection} h4>
