@@ -17,11 +17,11 @@ const Home = ({ navigation }) => {
   const [loading, setLoading] = useState(false)
   const { getItem, setItem } = useAsyncStorage('@local')
   // const [search, setSearch] = useState('')
-
+  
   const makeMovieRequest = () => {
     //Richiesta dettagli film da API del sito TheMovieDB.org
     fetch(
-      'https://api.themoviedb.org/3/list/1?api_key=2a4ee1c370ac17ebfc701ee44ca985e3&language=en-US'
+      'https://api.themoviedb.org/3/list/1?api_key=2a4ee1c370ac17ebfc701ee44ca985e3&language=it-IT'
     )
       .then(response => response.json())
       .then(response => {
@@ -43,6 +43,7 @@ const Home = ({ navigation }) => {
     const item = await getItem()
     let list = JSON.parse(item)
     setMyData(list)
+    return list
   }
 
   const writeListToStorage = async listMovies => {
@@ -67,6 +68,7 @@ const Home = ({ navigation }) => {
   }, [])
 
   const handleCardInfo = scelta => {
+    //console.log(scelta)
     //METODO CHE PORTA ALLO SCREEN PER LE INFO DEL FILM SELEZIONATO
     navigation.navigate('Dettagli', {
       title: scelta.title,
@@ -82,15 +84,18 @@ const Home = ({ navigation }) => {
       saved: true
     }
     let myUpdateList = [...myData, savedMovie]
+    let movieToRemove = data.find(movie => movie.id == scelta.id)
+    let APIUpdateList = data.filter(movie => movie != movieToRemove)
     setMyData(myUpdateList)
+    setData(APIUpdateList)
     writeListToStorage(myUpdateList)
   }
   const handleCardRemove = scelta => {
     let movieToRemove = myData.find(movie => movie.id == scelta.id)
     let myUpdateList = myData.filter(movie => movie != movieToRemove)
     setMyData(myUpdateList)
+    setData([...data, {...scelta,saved:null}])
     writeListToStorage(myUpdateList)
-    // console.log(myData.filter((movie)=> movie != movieToRemove))
   }
   const renderItem = ({ item }) => (
     <CardMovie

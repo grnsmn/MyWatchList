@@ -1,13 +1,13 @@
 import { StatusBar } from 'expo-status-bar'
-import { View, StyleSheet, Image } from 'react-native'
-import { Text } from '@rneui/themed'
+import { ScrollView, StyleSheet, Image, View } from 'react-native'
+import { Text, Button } from '@rneui/themed'
 
 const DetailsMovie = ({ route }) => {
   const { title, poster, overview, date } = route.params
   let releaseDate = new Date(date)
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <StatusBar style='auto' />
       <View style={styles.mediaContainer}>
         <Image
@@ -25,7 +25,7 @@ const DetailsMovie = ({ route }) => {
         </Text>
         <Text h5 style={styles.overviewStyle} >{overview}</Text>
       </View>
-    </View>
+    </ScrollView>
   )
 }
 const styles = StyleSheet.create({
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     alignItems:'center'
   },
   img: {
-    //aspectRatio: 1,
+    aspectRatio: 2,
     width: '100%',
     height: '100%',
     backgroundColor:'black'
