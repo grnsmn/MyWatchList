@@ -7,17 +7,16 @@ import {
   ScrollView,
   ActivityIndicator
 } from 'react-native'
-import { Text, SearchBar } from '@rneui/themed'
+import { Text } from '@rneui/themed'
 import CardMovie from '../components/CardMovie'
 import { useAsyncStorage } from '@react-native-async-storage/async-storage'
 
-const Home = ({ navigation }) => {
+const Home = ({ navigation, route }) => {
   const [data, setData] = useState([]) //store film ricevuti da API
   const [myData, setMyData] = useState([]) //store film in locale
   const [loading, setLoading] = useState(false)
   const { getItem, setItem } = useAsyncStorage('@local')
-  // const [search, setSearch] = useState('')
-  
+
   const makeMovieRequest = () => {
     //Richiesta dettagli film da API del sito TheMovieDB.org
     fetch(
@@ -34,6 +33,7 @@ const Home = ({ navigation }) => {
           }
           return 0
         })
+
         setData(response.items)
       })
       .catch(err => console.error(err))
@@ -52,19 +52,24 @@ const Home = ({ navigation }) => {
     await setItem(locaList)
   }
 
-  // const updateSearch = search => {
-  //   setSearch(search)
-
-  // }
-
+  useEffect(() => {
+    //AGGIORNA LA LISTA DA AGGIUNTA O RIMOZIONE DALLA SCREEN DEI DETTAGLI
+    if (route.params?.movie) {
+      if (route.params.action == 'add') {
+        handleCardAdd(route.params.movie)
+      } else {
+        handleCardRemove(route.params.movie)
+      }
+    }
+  }, [route.params?.movie])
   useEffect(() => {
     setLoading(false)
   }, [data])
   useEffect(() => {}, [myData])
   useEffect(() => {
+    readListFromStorage()
     makeMovieRequest()
     setLoading(true)
-    readListFromStorage()
   }, [])
 
   const handleCardInfo = scelta => {
@@ -74,7 +79,9 @@ const Home = ({ navigation }) => {
       title: scelta.title,
       overview: scelta.overview,
       poster: scelta.backdrop_path,
-      date: scelta.release_date
+      date: scelta.release_date,
+      saved: scelta.saved,
+      infoComplete: scelta
     })
   }
   const handleCardAdd = scelta => {
@@ -94,7 +101,7 @@ const Home = ({ navigation }) => {
     let movieToRemove = myData.find(movie => movie.id == scelta.id)
     let myUpdateList = myData.filter(movie => movie != movieToRemove)
     setMyData(myUpdateList)
-    setData([...data, {...scelta,saved:null}])
+    setData([...data, { ...scelta, saved: null }])
     writeListToStorage(myUpdateList)
   }
   const renderItem = ({ item }) => (
@@ -161,13 +168,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#555',
     flex: 1,
-    padding: 10,
+    padding: 10
   },
   WatchListContainer: {
     alignItems: 'center',
     backgroundColor: '#555',
     flex: 1,
-    padding: 10,
+    padding: 10
   },
   textSection: {
     width: '60%',

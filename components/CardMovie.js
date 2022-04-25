@@ -17,58 +17,33 @@ const CardMovie = props => {
           }}
         />
         <Card.Divider />
-        <View style={styles.buttonContainer}>
+        <View style={styles.buttonView}>
           <Button
             title='Info'
             onPress={props.onClickInfo}
-            buttonStyle={{
-              backgroundColor: 'gold',
-              borderWidth: 2,
-              borderColor: 'white',
-              borderRadius: 30
-            }}
-            containerStyle={{
-              width: 100,
-              marginVertical: 2
-            }}
+            buttonStyle={{...styles.addButton, backgroundColor:'gold'}}
+            containerStyle={styles.buttonContainer}
             titleStyle={{ fontWeight: 'bold', color: 'black' }}
           />
           {props.saved == null ? (
             <Button
               title='Add'
               onPress={props.onClickAdd}
-              buttonStyle={{
-                backgroundColor: 'green',
-                borderWidth: 2,
-                borderColor: 'white',
-                borderRadius: 30
-              }}
-              containerStyle={{
-                width: 100,
-                marginVertical: 2
-              }}
+              buttonStyle={styles.addButton}
+              containerStyle={styles.buttonContainer}
               titleStyle={{ fontWeight: 'bold' }}
             />
           ) : (
             <Button
               title='Remove'
               onPress={props.onClickRemove}
-              buttonStyle={{
-                backgroundColor: 'red',
-                borderWidth: 2,
-                borderColor: 'white',
-                borderRadius: 30
-              }}
-              containerStyle={{
-                width: 100,
-                marginVertical: 2
-              }}
+              buttonStyle={{...styles.addButton, backgroundColor:'red'}}
+              containerStyle={styles.buttonContainer}
               titleStyle={{ fontWeight: 'bold' }}
             />
           )}
         </View>
       </Card>
-      <StatusBar style='auto' />
     </View>
   )
 }
@@ -83,9 +58,19 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 22
   },
-  buttonContainer: {
+  buttonView: {
     flexDirection: 'row',
     justifyContent: 'space-around'
+  },
+  addButton:{
+    backgroundColor: 'green',
+    borderWidth: 2,
+    borderColor: 'white',
+    borderRadius: 30
+  },
+  buttonContainer:{
+    width: 100,
+    marginVertical: 2
   },
   imageStyle: {
     height: 270,
