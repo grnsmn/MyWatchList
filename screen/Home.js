@@ -14,9 +14,9 @@ import { useAsyncStorage } from '@react-native-async-storage/async-storage'
 const Home = ({ navigation }) => {
   const [data, setData] = useState([]) //store film ricevuti da API
   const [myData, setMyData] = useState([]) //store film in locale
-  const [search, setSearch] = useState('')
   const [loading, setLoading] = useState(false)
   const { getItem, setItem } = useAsyncStorage('@local')
+  // const [search, setSearch] = useState('')
 
   const makeMovieRequest = () => {
     //Richiesta dettagli film da API del sito TheMovieDB.org
@@ -51,9 +51,10 @@ const Home = ({ navigation }) => {
     await setItem(locaList)
   }
 
-  const updateSearch = search => {
-    setSearch(search)
-  }
+  // const updateSearch = search => {
+  //   setSearch(search)
+
+  // }
 
   useEffect(() => {
     setLoading(false)

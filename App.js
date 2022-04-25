@@ -11,21 +11,15 @@ const Stack = createNativeStackNavigator()
 export default function App () {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='Login'>
+      <Stack.Navigator initialRouteName='Home'>
         <Stack.Screen
           name='Home'
           component={Home}
           options={{
             title: 'MyWatchList',
-            headerTitleStyle: {
-              fontWeight: 'bold',
-              color: 'gold',
-              fontSize:30
-            },
+            headerTitleStyle: styles.headerTitle,
             headerTitleAlign: 'center',
-            headerStyle: {
-              backgroundColor: '#666'
-            }
+            headerStyle: styles.headerContainer
           }}
         />
         <Stack.Screen
@@ -33,15 +27,9 @@ export default function App () {
           component={Login}
           options={{
             title: 'MyWatchList',
-            headerTitleStyle: {
-              fontSize:30,
-              fontWeight: 'bold',
-              color: 'gold'
-            },
+            headerTitleStyle: styles.headerTitle,
             headerTitleAlign: 'center',
-            headerStyle: {
-              backgroundColor: '#666'
-            }
+            headerStyle: styles.headerContainer
           }}
         />
         <Stack.Screen
@@ -49,15 +37,9 @@ export default function App () {
           component={DetailsMovie}
           options={{
             title: 'MyWatchList',
-            headerTitleStyle: {
-              fontWeight: 'bold',
-              fontSize:25,
-              color: 'gold'
-            },
+            headerTitleStyle: styles.headerTitle,
             headerTitleAlign: 'center',
-            headerStyle: {
-              backgroundColor: '#666'
-            }
+            headerStyle: styles.headerContainer
           }}
         />
       </Stack.Navigator>
@@ -65,3 +47,14 @@ export default function App () {
   )
 }
 
+const styles = StyleSheet.create({
+  headerTitle: {
+    fontWeight: 'bold',
+    color: 'gold',
+    fontSize: 30
+  },
+  headerContainer:{
+    backgroundColor: '#666'
+
+  }
+})

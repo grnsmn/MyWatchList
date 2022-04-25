@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar'
-import { View, StyleSheet, ActivityIndicator, Image } from 'react-native'
+import { View, StyleSheet, Image } from 'react-native'
 import { Text } from '@rneui/themed'
 
 const DetailsMovie = ({ route }) => {
@@ -23,8 +23,7 @@ const DetailsMovie = ({ route }) => {
         <Text h3 h3Style={{ textAlign: 'right', color:'white' }}>
           ({releaseDate.getFullYear()})
         </Text>
-        <Text h5 style={{textAlign:'justify', marginTop:10, fontSize:16, padding:20, color:'white'}} >{overview}</Text>
-
+        <Text h5 style={styles.overviewStyle} >{overview}</Text>
       </View>
     </View>
   )
@@ -44,6 +43,9 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     backgroundColor:'black'
+  },
+  overviewStyle:{
+    textAlign:'justify', marginTop:10, fontSize:16, padding:20, color:'white'
   },
   infoContainer: {
     flex: 1,

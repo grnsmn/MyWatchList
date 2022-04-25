@@ -10,8 +10,6 @@ const Login = ({ navigation }) => {
   const [mail, setMail] = useState('E-Mail')
   const [pwd, setPwd] = useState('Password')
   const [checkForm, setCheckForm] = useState(false)
-  //   console.log(mail)
-  //   console.log(pwd)
 
   const handleLogin = () => {
     let condition1 = mail.includes('simone@email.com')
@@ -56,17 +54,8 @@ const Login = ({ navigation }) => {
         <Button
           title='LOG IN'
           onPress={handleLogin}
-          buttonStyle={{
-            backgroundColor: 'black',
-            borderWidth: 3,
-            borderColor: 'gold',
-            borderRadius: 30
-          }}
-          containerStyle={{
-            width: 200,
-            marginHorizontal: 50,
-            marginVertical: 10
-          }}
+          buttonStyle={styles.loginStyle}
+          containerStyle={styles.loginContainer}
           titleStyle={{ fontWeight: 'bold' }}
         />
       </View>
@@ -74,7 +63,7 @@ const Login = ({ navigation }) => {
         Non hai un account?{' '}
         <Text
           style={{ color: 'blue' }}
-          onPress={() => Linking.openURL('http://google.com')}
+          onPress={() => Linking.openURL('https://www.themoviedb.org/')}
         >
           Registrati
         </Text>
@@ -97,6 +86,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
     marginVertical: 20
+  },
+  loginContainer:{
+    width: 200,
+    marginHorizontal: 50,
+    marginVertical: 10
+  },
+  loginStyle:{
+    backgroundColor: 'black',
+    borderWidth: 3,
+    borderColor: 'gold',
+    borderRadius: 30
   },
   inputStyle: {
     borderWidth: 4,
