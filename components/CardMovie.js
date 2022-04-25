@@ -21,7 +21,7 @@ const CardMovie = props => {
           <Button
             title='Info'
             onPress={props.onClickInfo}
-            buttonStyle={{...styles.addButton, backgroundColor:'gold'}}
+            buttonStyle={{ ...styles.addButton, backgroundColor: 'gold' }}
             containerStyle={styles.buttonContainer}
             titleStyle={{ fontWeight: 'bold', color: 'black' }}
           />
@@ -37,7 +37,7 @@ const CardMovie = props => {
             <Button
               title='Remove'
               onPress={props.onClickRemove}
-              buttonStyle={{...styles.addButton, backgroundColor:'red'}}
+              buttonStyle={{ ...styles.addButton, backgroundColor: 'red' }}
               containerStyle={styles.buttonContainer}
               titleStyle={{ fontWeight: 'bold' }}
             />
@@ -62,13 +62,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around'
   },
-  addButton:{
+  addButton: {
     backgroundColor: 'green',
     borderWidth: 2,
     borderColor: 'white',
     borderRadius: 30
   },
-  buttonContainer:{
+  buttonContainer: {
     width: 100,
     marginVertical: 2
   },

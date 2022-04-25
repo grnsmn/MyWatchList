@@ -53,8 +53,7 @@ const styles = StyleSheet.create({
     color: 'gold',
     fontSize: 30
   },
-  headerContainer:{
+  headerContainer: {
     backgroundColor: '#666'
-
   }
 })

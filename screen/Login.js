@@ -85,12 +85,12 @@ const styles = StyleSheet.create({
     width: '100%',
     marginVertical: 20
   },
-  loginContainer:{
+  loginContainer: {
     width: 200,
     marginHorizontal: 50,
     marginVertical: 10
   },
-  loginStyle:{
+  loginStyle: {
     backgroundColor: 'black',
     borderWidth: 3,
     borderColor: 'gold',
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
   },
   inputStyle: {
     borderWidth: 4,
-    borderColor:'gold',
+    borderColor: 'gold',
     borderRadius: 10,
     padding: 15,
     marginTop: 20
